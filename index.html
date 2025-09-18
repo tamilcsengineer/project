@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindPal - Your AI Mental Health Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for better maintainability */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-gradient: linear-gradient(90deg, #5a67d8, #8e44ad);
+            --warning-gradient: linear-gradient(90deg, #ffeaa7, #fab1a0);
+            --light-bg: #f8f9fa;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --primary-color: #5a67d8;
+            --dark-text: #2d3748;
+            --footer-text: #718096;
+            --shadow-light: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--primary-gradient);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Main Container */
+        .container {
+            background: var(--container-bg);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 800px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Header Section */
+        .header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .header .logo, .header h1, .header p {
+            margin-bottom: 0.5rem;
+        }
+        .logo {
+            font-size: 2.8rem;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Content Section */
+        .content {
+            padding: 2.5rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background: var(--light-bg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .feature h3 {
+            color: var(--dark-text);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Warning Box */
+        .warning {
+            background: var(--warning-gradient);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border-left: 5px solid #e17055;
+            color: #d63031;
+        }
+
+        .warning p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Chat Interface */
+        .chat-interface {
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 450px;
+            background: #fff;
+            margin-top: 1.5rem;
+        }
+        .chat-display {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 2px solid #e2e8f0;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .chat-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .chat-input button:hover {
+            background-color: #4a54c9;
+        }
+        .message {
+            margin-bottom: 1rem;
+            padding: 10px 15px;
+            border-radius: 12px;
+            max-width: 70%;
+        }
+        .message.user {
+            background-color: var(--primary-color);
+            color: white;
+            align-self: flex-end;
+        }
+        .message.bot {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            align-self: flex-start;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            color: var(--footer-text);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 2rem 1.5rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .content {
+                padding: 1.5rem;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-brain" aria-hidden="true"></i>
+            </div>
+            <h1>MindPal</h1>
+            <p>Your empathetic AI companion for mental well-being</p>
+        </header>
+
+        <main class="content">
+            <section class="features">
+                <div class="feature">
+                    <i class="fas fa-ear-listen" aria-hidden="true"></i>
+                    <h3>Always Listening</h3>
+                    <p>A safe space to express your thoughts and feelings, anytime.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                    <h3>Coping Tools</h3>
+                    <p>Quick exercises like breathing techniques to help you find calm.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-hands-helping" aria-hidden="true"></i>
+                    <h3>Smart Resources</h3>
+                    <p>Direct connections to professional help when you need it most.</p>
+                </div>
+            </section>
+
+            <aside class="warning">
+                <p><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Important: MindPal is an AI demo project and not a substitute for professional medical care. In a crisis, please call <b>988</b> immediately.</p>
+            </aside>
+
+            <div class="chat-interface">
+                <div class="chat-display" id="chat-display">
+                    <div class="message bot">
+                        <p>Hello! I'm here to listen. How are you feeling today?</p>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Type your message..." />
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+            
+        </main>
+
+        <footer class="footer">
+            <p>Made with ❤️ by Sam | A Project for Better Mental Health</p>
+        </footer>
+    </div>
+
+    <script>
+        const chatDisplay = document.getElementById('chat-display');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        // Hardcoded prompts and replies
+        const replies = {
+            "sad": "I hear you. It's okay to feel this way. Can you tell me more about what's making you sad?",
+            "down": "I'm sorry you're feeling down. Remember to be kind to yourself.",
+            "depressed": "That sounds really tough. While I can't offer professional help, I am here to listen. You are not alone.",
+            "anxious": "I understand. Sometimes a few deep breaths can help. Try taking a deep breath in through your nose, hold it for a moment, and exhale slowly.",
+            "stressed": "Stress can be overwhelming. What's on your mind? Maybe talking about it can help.",
+            "happy": "That's wonderful to hear! What's making you happy today?",
+            "grateful": "Feeling grateful is a beautiful thing. It's a great way to improve your mood.",
+            "excited": "That's so exciting! I'm happy for you. What are you looking forward to?",
+            "tired": "It's important to rest when you're tired. Remember to take a break and relax.",
+            "angry": "It's valid to feel angry. Try to identify the source of your anger. Sometimes that can help you manage it.",
+            "lonely": "Feeling lonely can be hard. I'm here for you. You can talk to me anytime you feel this way.",
+            "confused": "It's okay to be confused. Sometimes thinking things through one step at a time helps. What is confusing you?",
+            "bored": "Feeling bored? Maybe try a short activity like listening to music, doodling, or stretching.",
+            "scared": "I hear you. It's okay to be scared. Remember that you are strong and brave.",
+            "frustrated": "Frustration is a tough feeling. What's making you feel this way? Maybe we can find a solution together."
+        };
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', sender);
+            messageDiv.innerHTML = `<p>${text}</p>`;
+            chatDisplay.appendChild(messageDiv);
+            chatDisplay.scrollTop = chatDisplay.scrollHeight; // Auto-scroll to the latest message
+        }
+
+        function getBotReply(userMessage) {
+            const lowerCaseMessage = userMessage.toLowerCase();
+            for (const keyword in replies) {
+                if (lowerCaseMessage.includes(keyword)) {
+                    return replies[keyword];
+                }
+            }
+            return "I'm sorry, I don't have a specific response for that right now. Can you tell me more?";
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === "") return;
+
+            addMessage(message, 'user');
+            userInput.value = "";
+
+            setTimeout(() => {
+                const botReply = getBotReply(message);
+                addMessage(botReply, 'bot');
+            }, 500); // Simulate a small delay for the bot's response
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+    </script>
+</body>
+</html>
